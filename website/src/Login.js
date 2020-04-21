@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import axios from "axios";
 
 
-
+// Login component
+// with form
+// and axios request
 class Login extends Component {
   constructor(props) {
     super(props);

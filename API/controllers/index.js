@@ -1,10 +1,7 @@
 const redis = require("redis");
 const client = redis.createClient();
 
-// Go to Home
-function goToHome(req, res) {
-    res.render('index', {session : req.session});
-}
+
 
 // Signup
 function goToSignUp(req, res) {
@@ -39,18 +36,6 @@ function signUpPerson(req, res) {
     });
 }
 
-// Log In
-function goToLogIn(req, res) {
-    // If the person is already logged in we redirect him to the home page
-    if (typeof req.session.username !== 'undefined') {
-        res.redirect('/home');
-        // Else he can log in
-    } else {
-        res.render('login', {session : req.session});
-    }
-
-
-}
 
 function logInPerson(req, res) {
     const crypto = require('crypto');

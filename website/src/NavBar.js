@@ -2,13 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import NavBarButtonEnd from "./NavBarButtonEnd";
 
-// outline : 0
+// app navbar
 const NavBar = () => {
   return (
-    <nav id="navbar" className="navbar is-fixed-top is-dark"  id="header">
+    
+    <nav id="navbar" className="navbar is-fixed-top is-dark" >
       <div
         className="navbar-burger burger"
-        data-target="navbarExampleTransparentExample" id="navbarBurger"
+        data-target="navbarExampleTransparentExample"
+        id="navbarBurger"
       >
         <span></span>
         <span></span>
@@ -23,11 +25,13 @@ const NavBar = () => {
 
         <div className="navbar-end" id="navend">
           <div className="navbar-item">
+            {/* right button (signup/login or logout if you are already connected) */}
             <NavBarButtonEnd />
           </div>
         </div>
       </div>
     </nav>
+    
   );
 };
 

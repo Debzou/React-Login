@@ -14,18 +14,13 @@ router.get('/home',(req,res)=>{
 // Account
 
 // Sign up page
-router.get('/signup',(req,res)=>{
-    controller.goToSignUp(req,res);
-});
 
 router.post('/signup',(req,res)=>{
     controller.signUpPerson(req,res);
 });
 
 // Log in page
-router.get('/login',(req,res)=>{
-    controller.goToLogIn(req,res);
-});
+
 
 router.post('/login',(req,res)=>{
     controller.logInPerson(req,res);
