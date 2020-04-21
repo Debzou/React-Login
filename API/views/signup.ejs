@@ -1,0 +1,71 @@
+<html>
+<head>
+	<title>Dream Team</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			var username, pass, passconf, email;
+			$("#submit").click(function(){
+				username=$("#username").val();
+				pass=$("#password").val();
+				passconf=$("#passwordconf").val();
+				email=$("#email").val();
+
+				// First we need to check if the username is already used
+				$.getJSON('/api/username/' + username, function(data) {
+					if (data.length == 0) {
+
+					// First we need to check if the email is already used
+					$.getJSON('/api/email/' + email, function(data2) {
+						if (data2.length == 0) {
+							
+							// Check is passwords are the same
+							if (pass == passconf) {
+
+								$.post("/signup",{username:username, pass:pass, passconf:passconf, email:email}, function(data){
+									if(data==='done') {
+										window.location.href="/home";
+									}
+								});
+
+							} else {
+								alert('Email already taken');
+							}
+
+						} else {
+							alert('Email already taken');
+						}
+				    });
+
+					} else {
+						alert('Username already taken');
+					}
+			    });
+
+				/*
+
+				$.post("/signup",{username:username, pass:pass, passconf:passconf, email:email}, function(data){
+					if(data==='done') {
+						window.location.href="/home";
+					} else if (data==='error_username') {
+						alert('Username already taken');
+					} else if (data==='error_password') {
+						alert('Passwords do not match');
+					} else if (data==='error_email') {
+						alert('Email already taken');
+					}
+				});
+
+				*/
+			});
+		});
+	</script>
+</head>
+<body>
+	<input type="text" size="40" placeholder="Type your username" id="username"><br />
+	<input type="text" size="40" placeholder="Type your email" id="email"><br />
+	<input type="password" size="40" placeholder="Type your password" id="password"><br />
+	<input type="password" size="40" placeholder="Type your password" id="passwordconf"><br />
+	<input type="button" value="Submit" id="submit">
+</body>
+</html>
