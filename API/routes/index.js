@@ -36,6 +36,13 @@ router.get('/logout',(req,res) => {
     controller.logOut(req, res);
 });
 
+// Check if username exists
+router.get('/api/username/:username',(req,res)=>{
+    controller.getUsername(req,res);
+});
 
+router.get('/api/email/:email',(req,res)=>{
+    controller.getEMail(req,res);
+});
 
 module.exports=router;

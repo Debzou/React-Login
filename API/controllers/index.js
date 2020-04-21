@@ -81,7 +81,28 @@ function logOut(req, res) {
         res.redirect('/');
     });
 }
+// Check if username exists
+function getUsername(req, res) {
+    const Models = require('../models');
 
+    Models.Account.find({username : req.params.username}, function(err, username) {
+
+        if (err) throw err;
+
+        res.json(username);
+
+    });
+
+}
+
+function getEMail(req, res) {
+    const Models = require('../models');
+
+    Models.Account.find({email : req.params.email}, function(err, email) {
+        if (err) throw err;
+        res.json(email);
+    });
+}
 // export
 
 module.exports.goToHome = goToHome;
@@ -90,4 +111,5 @@ module.exports.signUpPerson = signUpPerson;
 module.exports.goToLogIn = goToLogIn;
 module.exports.logInPerson = logInPerson;
 module.exports.logOut = logOut;
-
+module.exports.getEMail =getEMail;
+module.exports.getUsername = getUsername;

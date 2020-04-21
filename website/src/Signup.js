@@ -11,6 +11,13 @@ class Signup extends Component {
       password: "",
       passwordConfirmation: "",
       isChecked: false,
+      inputUsername: "input",
+      inputMail: "input",
+      inputPassword: "input",
+      inputPass: "input", //(confirmation)
+      validUsername: false,
+      validMail: false,
+      validPass: false,
     };
     this.handleChecked = this.handleChecked.bind(this);
     // set this, because you need get methods from CheckBox
@@ -18,26 +25,31 @@ class Signup extends Component {
   handleChecked() {
     this.setState({ isChecked: !this.state.isChecked });
   }
+
   // signup login
   mySubmitHandler = (event) => {
     event.preventDefault();
 
     if (this.state.isChecked) {
-      if(this.state.password ===this.state.passwordConfirmation){
+      if (
+        (this.state.password === this.state.passwordConfirmation) &
+        this.state.validUsername &
+        this.state.validMail &
+        this.state.validPass
+      ) {
         axios
-        .post("/signup", {
-          username: this.state.username,
-          pass: this.state.password,
-          email: this.state.email
-        })
-        .then((response) => {
-          console.log(response);
-          this.props.history.push("/login");
-        });
-      }else{
-        alert('not the same password')
+          .post("/signup", {
+            username: this.state.username.toLowerCase(),
+            pass: this.state.password,
+            email: this.state.email,
+          })
+          .then((response) => {
+            console.log(response);
+            this.props.history.push("/login");
+          });
+      } else {
+        alert("Something is wrong check syntax");
       }
-      
     } else {
       alert("check the box");
     }
@@ -49,6 +61,61 @@ class Signup extends Component {
     // value of attribut
     let val = event.target.value;
     this.setState({ [nam]: val });
+    if (nam === "email") {
+      // email
+      let mail = "inputMail";
+      let valide = "validMail";
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+        // email not valid
+
+        this.setState({ [mail]: "input is-danger" });
+        this.setState({ [valide]: false });
+      } else {
+        // check email is exist
+        axios.get(`/api/email/${val}`).then((response) => {
+          if (response.data.length === 0) {
+            this.setState({ [mail]: "input is-success" });
+            this.setState({ [valide]: true });
+          } else {
+            this.setState({ [mail]: "input is-danger" });
+            this.setState({ [valide]: false });
+          }
+        });
+      }
+    } else if (nam === "username") {
+      // username
+      let inputUser = "inputUsername";
+      let valide2 = "validUsername";
+      // user already exist ?
+      axios.get(`/api/username/${val.toLowerCase()}`).then((response) => {
+        if (response.data.length === 0) {
+          this.setState({ [inputUser]: "input is-success" });
+          this.setState({ [valide2]: true });
+        } else {
+          this.setState({ [inputUser]: "input is-danger" });
+          this.setState({ [valide2]: false });
+        }
+      });
+    } else if (nam === "passwordConfirmation") {
+      let inputPass = "inputPass";
+      if (val === this.state.password) {
+        this.setState({ [inputPass]: "input is-success" });
+      } else {
+        this.setState({ [inputPass]: "input is-danger" });
+      }
+    } else if (nam === "password") {
+      let valide3 = "validPass";
+      let inputPass = "inputPassword";
+      if (/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$/.test(val)) {
+        // strong
+        this.setState({ [inputPass]: "input is-success" });
+        this.setState({ [valide3]: true });
+      } else {
+        // weak
+        this.setState({ [inputPass]: "input is-danger" });
+        this.setState({ [valide3]: false });
+      }
+    }
   };
   // html
   render() {
@@ -58,104 +125,121 @@ class Signup extends Component {
           <div className="columns is-centered">
             <div className="column is-6-tablet is-5-desktop is-4-widescreen">
               <div className="notification">
-                {/* <!-- USERNAME --> */}
-                <div className="field">
-                  <label className="label">Username</label>
-                  <div className="control has-icons-left has-icons-right">
-                    <input
-                      onChange={this.myChangeHandler}
-                      name="username"
-                      className="input"
-                      type="text"
-                      placeholder="Username input"
-                      id="username"
-                    />
-                    <span className="icon is-small is-left">
-                      <i className="fas fa-user"></i>
-                    </span>
-                  </div>
-                </div>
-
-                {/* <!-- EMAIL --> */}
-                <div className="field">
-                  <label className="label">Email</label>
-                  <div className="control has-icons-left has-icons-right">
-                    <input
-                      onChange={this.myChangeHandler}
-                      name="email"
-                      className="input"
-                      type="email"
-                      placeholder="Email input"
-                      id="email"
-                    />
-                    <span className="icon is-small is-left">
-                      <i className="fas fa-envelope"></i>
-                    </span>
-                  </div>
-                </div>
-
-                {/* <!-- PASSWORD --> */}
-                <div className="field">
-                  <label className="label">Password</label>
-                  <div className="control has-icons-left has-icons-right">
-                    <input
-                      onChange={this.myChangeHandler}
-                      name="password"
-                      className="input"
-                      type="password"
-                      placeholder="Password input"
-                      id="password"
-                    />
-                    <span className="icon is-small is-left">
-                      <i className="fas fa-lock"></i>
-                    </span>
-                  </div>
-                  <br></br>
-                  <div className="control has-icons-left has-icons-right">
-                    <input
-                      onChange={this.myChangeHandler}
-                      name="passwordConfirmation"
-                      className="input"
-                      type="password"
-                      placeholder="Password confirmation"
-                    />
-                    <span className="icon is-small is-left">
-                      <i className="fas fa-lock"></i>
-                    </span>
+                <form onSubmit={this.mySubmitHandler}>
+                  {/* <!-- USERNAME --> */}
+                  <div className="field">
+                    <label className="label">Username</label>
+                    <div className="control has-icons-left has-icons-right">
+                      <input
+                        onChange={this.myChangeHandler}
+                        name="username"
+                        className={this.state.inputUsername}
+                        type="text"
+                        placeholder="Username input"
+                        id="username"
+                      />
+                      <span className="icon is-small is-left">
+                        <i className="fas fa-user"></i>
+                      </span>
+                      {this.state.validUsername ? (
+                        <p className="help is-success">
+                          This username is available
+                        </p>
+                      ) : (
+                        <p className="help is-danger">
+                          This username is not available
+                        </p>
+                      )}
+                    </div>
                   </div>
 
-                  <p id="password_force_bar" className="help">
-                    <progress
-                      className="progress is-danger"
-                      value="0"
-                      max="100"
-                    ></progress>
-                  </p>
+                  {/* <!-- EMAIL --> */}
+                  <div className="field">
+                    <label className="label">Email</label>
+                    <div className="control has-icons-left has-icons-right">
+                      <input
+                        onChange={this.myChangeHandler}
+                        name="email"
+                        className={this.state.inputMail}
+                        type="email"
+                        placeholder="Email input"
+                        id="email"
+                      />
+                      <span className="icon is-small is-left">
+                        <i className="fas fa-envelope"></i>
+                      </span>
+                      {this.state.validMail ? (
+                        <p className="help is-success">
+                          This mail is available
+                        </p>
+                      ) : (
+                        <p className="help is-danger">
+                          This mail is not available{" "}
+                        </p>
+                      )}
+                    </div>
+                  </div>
 
-                  <p id="p_password" className="help"></p>
-                </div>
+                  {/* <!-- PASSWORD --> */}
+                  <div className="field">
+                    <label className="label">Password</label>
+                    <div className="control has-icons-left has-icons-right">
+                      <input
+                        onChange={this.myChangeHandler}
+                        name="password"
+                        className={this.state.inputPassword}
+                        type="password"
+                        placeholder="Password input"
+                        id="password"
+                      />
+                      <span className="icon is-small is-left">
+                        <i className="fas fa-lock"></i>
+                      </span>
+                    </div>
+                    {this.state.validPass ? (
+                      <p className="help is-success">Strong password</p>
+                    ) : (
+                      <p className="help is-danger">
+                        the password must contain one upper case letter, one
+                        lower case letter, one number and be 8 in size.
+                      </p>
+                    )}
+                    <br></br>
+                    <div className="control has-icons-left has-icons-right">
+                      <input
+                        onChange={this.myChangeHandler}
+                        name="passwordConfirmation"
+                        className={this.state.inputPass}
+                        type="password"
+                        placeholder="Password confirmation"
+                      />
+                      <span className="icon is-small is-left">
+                        <i className="fas fa-lock"></i>
+                      </span>
+                    </div>
+                  </div>
 
-                <label className="checkbox">
-                  <input
-                    onChange={this.handleChecked}
-                    type="checkbox"
-                    id="checkbox"
-                  />
-                  I agree to the terms and conditions.
-                </label>
-                <br />
-                <br />
+                  <label className="checkbox">
+                    <input
+                      onChange={this.handleChecked}
+                      type="checkbox"
+                      id="checkbox"
+                    />
+                    I agree to the terms and conditions.
+                  </label>
+                  <br />
+                  <br />
 
-                <div className="control">
-                  <button
-                    onClick={this.mySubmitHandler}
-                    className="button is-link"
-                    value="Submit"
-                    id="submit"
-                  >
-                    Submit
-                  </button>
-                </div>
+                  <div className="control">
+                    <button
+                      className="button is-link"
+                      value="Submit"
+                      id="submit"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
