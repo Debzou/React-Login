@@ -90,10 +90,9 @@ function getEMail(req, res) {
 }
 // export
 
-module.exports.goToHome = goToHome;
-module.exports.goToSignUp = goToSignUp;
+
 module.exports.signUpPerson = signUpPerson;
-module.exports.goToLogIn = goToLogIn;
+
 module.exports.logInPerson = logInPerson;
 module.exports.logOut = logOut;
 module.exports.getEMail =getEMail;
