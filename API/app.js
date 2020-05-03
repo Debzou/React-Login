@@ -5,15 +5,7 @@ const DreamTeamRoutes = require('./routes');
 const redis = require('redis');
 const redisStore = require('connect-redis')(session);
 const client  = redis.createClient();
-const cors = require('cors')
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "http://localhost:3001");
-//     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//     next();
-//   });
 
-// app.use(cors);
 app.use(
     session({
         secret: 'secret-key',
@@ -22,7 +14,7 @@ app.use(
         resave: false
     })
   );
-app.options('http://localhost:3001', cors())
+
 
 // Parser
 const bodyParser = require('body-parser');
@@ -46,10 +38,5 @@ mongoose.connect(database,(err)=> {
     console.log('Connect to the database');
 });
 
-// Path and Views
-const path = require('path');
-let dirViews = [path.join(__dirname,'./views')];
-app.set('views',dirViews);
-app.set('view engine','ejs');
 
 // We want to gather dreams and know if other people had the same dream to make connections

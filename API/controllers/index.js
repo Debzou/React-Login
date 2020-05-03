@@ -3,16 +3,6 @@ const client = redis.createClient();
 
 
 
-// Signup
-function goToSignUp(req, res) {
-    // If the person is already logged in we redirect him to the home page
-    if (typeof req.session.username !== 'undefined') {
-        res.redirect('/home');
-        // Else he can sign in
-    } else {
-        res.render('signup', {session : req.session});
-    }
-}
 
 function signUpPerson(req, res) {
     const crypto = require('crypto');
