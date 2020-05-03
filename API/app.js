@@ -1,20 +1,7 @@
 const express = require('express');
 const app = express();
-const session = require('express-session');
+
 const DreamTeamRoutes = require('./routes');
-const redis = require('redis');
-const redisStore = require('connect-redis')(session);
-const client  = redis.createClient();
-
-app.use(
-    session({
-        secret: 'secret-key',
-        store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl : 260}),
-        saveUninitialized: false,
-        resave: false
-    })
-  );
-
 
 // Parser
 const bodyParser = require('body-parser');
@@ -37,6 +24,3 @@ mongoose.connect(database,(err)=> {
         throw err;
     console.log('Connect to the database');
 });
-
-
-// We want to gather dreams and know if other people had the same dream to make connections

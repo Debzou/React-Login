@@ -13,7 +13,6 @@ import Profile from "./Profile";
 import NavBar from "./NavBar";
 
 
-
 class ProtectedRoute extends Component {
   render() {
       const { component: Component, ...props } = this.props;
