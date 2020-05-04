@@ -18,10 +18,14 @@ class Signup extends Component {
       validUsername: false,
       validMail: false,
       validPass: false,
+      firstTryUsername:true,
+      firstTryEmail:true,
+      firstTryPassword:true,
     };
     this.handleChecked = this.handleChecked.bind(this);
     // set this, because you need get methods from CheckBox
   }
+  // checkbox 
   handleChecked() {
     this.setState({ isChecked: !this.state.isChecked });
   }
@@ -60,14 +64,16 @@ class Signup extends Component {
     let nam = event.target.name;
     // value of attribut
     let val = event.target.value;
+   
     this.setState({ [nam]: val });
     if (nam === "email") {
+      let first = 'firstTryEmail';
+      this.setState({[first]:false})
       // email
       let mail = "inputMail";
       let valide = "validMail";
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
         // email not valid
-
         this.setState({ [mail]: "input is-danger" });
         this.setState({ [valide]: false });
       } else {
@@ -83,20 +89,30 @@ class Signup extends Component {
         });
       }
     } else if (nam === "username") {
+      
       // username
       let inputUser = "inputUsername";
       let valide2 = "validUsername";
+      let first = 'firstTryUsername';
+      this.setState({[first]:false})
       // user already exist ?
       axios.get(`/api/username/${val.toLowerCase()}`).then((response) => {
         if (response.data.length === 0) {
           this.setState({ [inputUser]: "input is-success" });
           this.setState({ [valide2]: true });
         } else {
-          this.setState({ [inputUser]: "input is-danger" });
-          this.setState({ [valide2]: false });
+          if (val ===""){
+
+          }else{
+            console.log(val);
+            this.setState({ [inputUser]: "input is-danger" });
+            this.setState({ [valide2]: false });
+          }
+          
         }
       });
     } else if (nam === "passwordConfirmation") {
+      // passwordConfirmation
       let inputPass = "inputPass";
       if (val === this.state.password) {
         this.setState({ [inputPass]: "input is-success" });
@@ -104,6 +120,10 @@ class Signup extends Component {
         this.setState({ [inputPass]: "input is-danger" });
       }
     } else if (nam === "password") {
+      
+      let first = 'firstTryPassword';
+      this.setState({[first]:false})
+      // password
       let valide3 = "validPass";
       let inputPass = "inputPassword";
       if (/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$/.test(val)) {
@@ -141,7 +161,9 @@ class Signup extends Component {
                       <span className="icon is-small is-left">
                         <i className="fas fa-user"></i>
                       </span>
-                      {this.state.validUsername ? (
+                      
+                      {this.state.firstTryUsername ? (<div></div>)
+                      : this.state.validUsername ? (
                         <p className="help is-success">
                           This username is available
                         </p>
@@ -168,7 +190,8 @@ class Signup extends Component {
                       <span className="icon is-small is-left">
                         <i className="fas fa-envelope"></i>
                       </span>
-                      {this.state.validMail ? (
+                      {this.state.firstTryEmail ? (<div></div>)
+                      :this.state.validMail ? (
                         <p className="help is-success">
                           This mail is available
                         </p>
@@ -196,7 +219,8 @@ class Signup extends Component {
                         <i className="fas fa-lock"></i>
                       </span>
                     </div>
-                    {this.state.validPass ? (
+                    {this.state.firstTryPassword ? (<div></div>)
+                    :this.state.validPass ? (
                       <p className="help is-success">Strong password</p>
                     ) : (
                       <p className="help is-danger">
