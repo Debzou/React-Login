@@ -99,19 +99,20 @@ class Signup extends Component {
     let first = "firstTryUsername";
     this.setState({ [first]: false });
     // user already exist ?
-    axios.get(`/api/username/${val.toLowerCase()}`).then((response) => {
-      if (response.data.length === 0) {
-        this.setState({ [inputUser]: "input is-success" });
-        this.setState({ [valide2]: true });
-      } else {
-        if (val === "") {
+    if(!/\s/.test(String(val)) && val !== ""){
+      axios.get(`/api/username/${val.toLowerCase()}`).then((response) => {
+        if (response.data.length === 0) {
+          this.setState({ [inputUser]: "input is-success" });
+          this.setState({ [valide2]: true });
         } else {
-          console.log(val);
-          this.setState({ [inputUser]: "input is-danger" });
-          this.setState({ [valide2]: false });
+          if (val === "") {
+          } else {
+            this.setState({ [inputUser]: "input is-danger" });
+            this.setState({ [valide2]: false });
+          }
         }
-      }
-    });
+      })
+    } 
     
   };
 
