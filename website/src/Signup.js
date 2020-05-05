@@ -18,14 +18,14 @@ class Signup extends Component {
       validUsername: false,
       validMail: false,
       validPass: false,
-      firstTryUsername:true,
-      firstTryEmail:true,
-      firstTryPassword:true,
+      firstTryUsername: true,
+      firstTryEmail: true,
+      firstTryPassword: true,
     };
     this.handleChecked = this.handleChecked.bind(this);
     // set this, because you need get methods from CheckBox
   }
-  // checkbox 
+  // checkbox
   handleChecked() {
     this.setState({ isChecked: !this.state.isChecked });
   }
@@ -35,12 +35,7 @@ class Signup extends Component {
     event.preventDefault();
 
     if (this.state.isChecked) {
-      if (
-        (this.state.password === this.state.passwordConfirmation) &
-        this.state.validUsername &
-        this.state.validMail &
-        this.state.validPass
-      ) {
+      if ((this.state.password === this.state.passwordConfirmation) & this.state.validUsername & this.state.validMail & this.state.validPass) {
         axios
           .post("/signup", {
             username: this.state.username.toLowerCase(),
@@ -50,6 +45,7 @@ class Signup extends Component {
           .then((response) => {
             console.log(response);
             this.props.history.push("/login");
+           
           });
       } else {
         alert("Something is wrong check syntax");
@@ -58,60 +54,77 @@ class Signup extends Component {
       alert("check the box");
     }
   };
-  // change state
-  myChangeHandler = (event) => {
-    // name of attribut ( ex username)
+
+  // if email change
+  emailHandler = (event) => {
+    // name of attribut
     let nam = event.target.name;
     // value of attribut
     let val = event.target.value;
-   
     this.setState({ [nam]: val });
-    if (nam === "email") {
-      let first = 'firstTryEmail';
-      this.setState({[first]:false})
-      // email
-      let mail = "inputMail";
-      let valide = "validMail";
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
-        // email not valid
-        this.setState({ [mail]: "input is-danger" });
-        this.setState({ [valide]: false });
-      } else {
-        // check email is exist
-        axios.get(`/api/email/${val}`).then((response) => {
-          if (response.data.length === 0) {
-            this.setState({ [mail]: "input is-success" });
-            this.setState({ [valide]: true });
-          } else {
-            this.setState({ [mail]: "input is-danger" });
-            this.setState({ [valide]: false });
-          }
-        });
-      }
-    } else if (nam === "username") {
-      
-      // username
-      let inputUser = "inputUsername";
-      let valide2 = "validUsername";
-      let first = 'firstTryUsername';
-      this.setState({[first]:false})
-      // user already exist ?
-      axios.get(`/api/username/${val.toLowerCase()}`).then((response) => {
+    let first = "firstTryEmail";
+    this.setState({ [first]: false });
+    // email
+    let mail = "inputMail";
+    let valide = "validMail";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+      // email not valid
+      this.setState({ [mail]: "input is-danger" });
+      this.setState({ [valide]: false });
+    } else {
+      // check email is exist
+      axios.get(`/api/email/${val}`).then((response) => {
         if (response.data.length === 0) {
-          this.setState({ [inputUser]: "input is-success" });
-          this.setState({ [valide2]: true });
+          this.setState({ [mail]: "input is-success" });
+          this.setState({ [valide]: true });
         } else {
-          if (val ===""){
-
-          }else{
-            console.log(val);
-            this.setState({ [inputUser]: "input is-danger" });
-            this.setState({ [valide2]: false });
-          }
-          
+          this.setState({ [mail]: "input is-danger" });
+          this.setState({ [valide]: false });
         }
       });
-    } else if (nam === "passwordConfirmation") {
+    }
+  };
+
+  // change state username
+  usernameHandler = (event) => {
+    // name of attribut
+    let nam = event.target.name;
+    // value of attribut
+    let val = event.target.value;
+    this.setState({ [nam]: val });
+    
+    // username
+    let inputUser = "inputUsername";
+    let valide2 = "validUsername";
+    let first = "firstTryUsername";
+    this.setState({ [first]: false });
+    // user already exist ?
+    axios.get(`/api/username/${val.toLowerCase()}`).then((response) => {
+      if (response.data.length === 0) {
+        this.setState({ [inputUser]: "input is-success" });
+        this.setState({ [valide2]: true });
+      } else {
+        if (val === "") {
+        } else {
+          console.log(val);
+          this.setState({ [inputUser]: "input is-danger" });
+          this.setState({ [valide2]: false });
+        }
+      }
+    });
+    
+  };
+
+  // change state password
+  passwordHandler = (event) => {
+    // name of attribut
+    let nam = event.target.name;
+    // value of attribut
+    let val = event.target.value;
+
+    this.setState({ [nam]: val });
+
+    if (nam === "passwordConfirmation") {
       // passwordConfirmation
       let inputPass = "inputPass";
       if (val === this.state.password) {
@@ -120,9 +133,8 @@ class Signup extends Component {
         this.setState({ [inputPass]: "input is-danger" });
       }
     } else if (nam === "password") {
-      
-      let first = 'firstTryPassword';
-      this.setState({[first]:false})
+      let first = "firstTryPassword";
+      this.setState({ [first]: false });
       // password
       let valide3 = "validPass";
       let inputPass = "inputPassword";
@@ -151,7 +163,7 @@ class Signup extends Component {
                     <label className="label">Username</label>
                     <div className="control has-icons-left has-icons-right">
                       <input
-                        onChange={this.myChangeHandler}
+                        onChange={this.usernameHandler}
                         name="username"
                         className={this.state.inputUsername}
                         type="text"
@@ -161,16 +173,13 @@ class Signup extends Component {
                       <span className="icon is-small is-left">
                         <i className="fas fa-user"></i>
                       </span>
-                      
-                      {this.state.firstTryUsername ? (<div></div>)
-                      : this.state.validUsername ? (
-                        <p className="help is-success">
-                          This username is available
-                        </p>
+
+                      {this.state.firstTryUsername ? (
+                        <div></div>
+                      ) : this.state.validUsername ? (
+                        <p className="help is-success">This username is available</p>
                       ) : (
-                        <p className="help is-danger">
-                          This username is not available
-                        </p>
+                        <p className="help is-danger">This username is not available</p>
                       )}
                     </div>
                   </div>
@@ -180,7 +189,7 @@ class Signup extends Component {
                     <label className="label">Email</label>
                     <div className="control has-icons-left has-icons-right">
                       <input
-                        onChange={this.myChangeHandler}
+                        onChange={this.emailHandler}
                         name="email"
                         className={this.state.inputMail}
                         type="email"
@@ -190,15 +199,12 @@ class Signup extends Component {
                       <span className="icon is-small is-left">
                         <i className="fas fa-envelope"></i>
                       </span>
-                      {this.state.firstTryEmail ? (<div></div>)
-                      :this.state.validMail ? (
-                        <p className="help is-success">
-                          This mail is available
-                        </p>
+                      {this.state.firstTryEmail ? (
+                        <div></div>
+                      ) : this.state.validMail ? (
+                        <p className="help is-success">This mail is available</p>
                       ) : (
-                        <p className="help is-danger">
-                          This mail is not available{" "}
-                        </p>
+                        <p className="help is-danger">This mail is not available </p>
                       )}
                     </div>
                   </div>
@@ -208,7 +214,7 @@ class Signup extends Component {
                     <label className="label">Password</label>
                     <div className="control has-icons-left has-icons-right">
                       <input
-                        onChange={this.myChangeHandler}
+                        onChange={this.passwordHandler}
                         name="password"
                         className={this.state.inputPassword}
                         type="password"
@@ -219,19 +225,19 @@ class Signup extends Component {
                         <i className="fas fa-lock"></i>
                       </span>
                     </div>
-                    {this.state.firstTryPassword ? (<div></div>)
-                    :this.state.validPass ? (
+                    {this.state.firstTryPassword ? (
+                      <div></div>
+                    ) : this.state.validPass ? (
                       <p className="help is-success">Strong password</p>
                     ) : (
                       <p className="help is-danger">
-                        the password must contain one upper case letter, one
-                        lower case letter, one number and be 8 in size.
+                        the password must contain one upper case letter, one lower case letter, one number and be 8 in size.
                       </p>
                     )}
                     <br></br>
                     <div className="control has-icons-left has-icons-right">
                       <input
-                        onChange={this.myChangeHandler}
+                        onChange={this.passwordHandler}
                         name="passwordConfirmation"
                         className={this.state.inputPass}
                         type="password"
@@ -244,22 +250,13 @@ class Signup extends Component {
                   </div>
 
                   <label className="checkbox">
-                    <input
-                      onChange={this.handleChecked}
-                      type="checkbox"
-                      id="checkbox"
-                    />
-                    I agree to the terms and conditions.
+                    <input onChange={this.handleChecked} type="checkbox" id="checkbox" />I agree to the terms and conditions.
                   </label>
                   <br />
                   <br />
 
                   <div className="control">
-                    <button
-                      className="button is-link"
-                      value="Submit"
-                      id="submit"
-                    >
+                    <button className="button is-link" value="Submit" id="submit">
                       Submit
                     </button>
                   </div>

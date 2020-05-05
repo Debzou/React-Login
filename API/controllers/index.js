@@ -18,10 +18,6 @@ function signUpPerson(req, res) {
 
     newAccount.save(function(err) {
         if (err) throw err;
-
-        //Store user's username into session
-        req.session.username = req.body.username;
-
         res.end('done');
     });
 }
