@@ -1,7 +1,3 @@
-const redis = require("redis");
-const client = redis.createClient();
-
-
 
 
 function signUpPerson(req, res) {
