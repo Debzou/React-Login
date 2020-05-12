@@ -1,0 +1,10 @@
+FROM node
+WORKDIR /app
+COPY . /app
+RUN npm install
+EXPOSE 3001
+CMD ["node","app.js"]
+
+#sudo docker system prune -a
+#sudo docker build -t app .
+#sudo docker run -p 3001:3001 app
