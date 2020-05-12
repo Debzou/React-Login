@@ -2,9 +2,6 @@ const router = require('express').Router();
 const controller = require('../controllers');
 
 
-
-
-
 // Sign up page
 
 router.post('/signup',(req,res)=>{
@@ -31,5 +28,10 @@ router.get('/api/username/:username',(req,res)=>{
 router.get('/api/email/:email',(req,res)=>{
     controller.getEMail(req,res);
 });
+
+router.get('/',(req,res)=>{
+    res.end("welcome in API")
+});
+
 
 module.exports=router;

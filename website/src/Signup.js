@@ -115,7 +115,7 @@ class Signup extends Component {
     } 
     
   };
-
+  
   // change state password
   passwordHandler = (event) => {
     // name of attribut
