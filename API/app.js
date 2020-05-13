@@ -18,8 +18,8 @@ console.log("waiting on localhost:3001");
 
 // MongoDB
 const mongoose = require('mongoose');
-database = 'mongodb://localhost:27017/RateLimitedAPI';
-mongoose.connect(database,(err)=> {
+database = 'mongodb://localhost:27017/api';
+mongoose.connect(database,{useNewUrlParser: true},(err)=> {
     if (err)
         throw err;
     console.log('Connect to the database');
