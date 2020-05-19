@@ -15,14 +15,14 @@ class NavBarButtonEnd extends Component {
         <span>
           <div className="field is-ground">
             <p className="control">
-              <Link className="button is-dark" to="/profile">
+              <Link className="button buttoncolor1" to="/profile">
                 <span className="icon">
                   <i className="fas fa-user-circle"></i>
                 </span>
                 <span>Profile</span>
               </Link>
               &nbsp;
-              <button className="button is-danger" onClick={this.logout}>
+              <button className="button buttoncolor3" onClick={this.logout}>
                 <span className="icon">
                   <i className="fas fa-sign-out-alt"></i>
                 </span>
@@ -37,14 +37,14 @@ class NavBarButtonEnd extends Component {
         <span>
           <div className="field is-ground">
             <p className="control">
-              <Link className="button is-success" to="/login">
+              <Link className="button buttoncolor1" to="/login">
                 <span className="icon">
                   <i className="fas fa-door-open"></i>
                 </span>
                 <span>Log In</span>
               </Link>
               &nbsp;
-              <Link className="button is-primary" to="/signup">
+              <Link className="button buttoncolor2" to="/signup">
                 <span className="icon">
                   <i className="fas fa-sign-in-alt"></i>
                 </span>

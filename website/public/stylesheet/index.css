@@ -1,3 +1,54 @@
-.textred{
-    color:red;
+.navbarStyle{
+    background-color: #0f073a;
+}
+.navitemStyle{
+    background-color: #0f073a !important ;
+    color:white !important;
+}
+
+.navitemStyle:hover{
+    background-color: #170b5b!important;
+    color:white !important;
+}
+
+.hero-image {
+    background-image: url("../background.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 100%;
+}
+
+.buttoncolor1 {
+    background-color: #2f2946;
+    color: white !important;
+    border: 0px;
+}
+
+.buttoncolor1:hover {
+    background-color:  #413960;
+    color: white !important;
+}
+
+.buttoncolor2 {
+    background-color: #3b193c;
+    color: white !important;
+    border: 0px;
+}
+
+.buttoncolor2:hover {
+    background-color:  #58265a;
+    color: white !important;
+}
+
+.buttoncolor3 {
+    background-color: #651a38;
+    color: white !important;
+    border: 0px;
+}
+
+.buttoncolor3:hover {
+    background-color:  #51152d;
+    color: white !important;
 }

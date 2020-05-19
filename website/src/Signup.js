@@ -257,7 +257,7 @@ class Signup extends Component {
                   <br />
 
                   <div className="control">
-                    <button className="button is-link" value="Submit" id="submit">
+                    <button className="button buttoncolor2" value="Submit" id="submit">
                       Submit
                     </button>
                   </div>

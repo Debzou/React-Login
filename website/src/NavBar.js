@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import NavBarButtonEnd from "./NavBarButtonEnd";
 
+
 // app navbar
 const NavBar = () => {
-  return (
-    
-    <nav id="navbar" className="navbar is-fixed-top is-dark" >
+  return (    
+    <nav id="navbar" className="navbar is-fixed-top" >
       <div
         className="navbar-burger burger"
         data-target="navbarExampleTransparentExample"
@@ -16,9 +16,9 @@ const NavBar = () => {
         <span></span>
         <span></span>
       </div>
-      <div className="navbar-menu" id="navbarExampleTransparentExample">
-        <div className="navbar-start">
-          <Link style={{}} className="navbar-item" to="/">
+      <div className="navbar-menu navbarStyle" id="navbarExampleTransparentExample">
+        <div className="navbar-start ">
+          <Link className="navbar-item navitemStyle" to="/">
             Home
           </Link>
         </div>

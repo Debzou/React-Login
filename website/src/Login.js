@@ -93,7 +93,7 @@ class Login extends Component {
                     </div>
                     {/* button */}
                     <div className="control">
-                      <button className="button is-link" value="Submit">
+                      <button className="button buttoncolor1" value="Submit">
                         Submit
                       </button>
                     </div>
