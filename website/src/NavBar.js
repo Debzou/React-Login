@@ -21,6 +21,10 @@ const NavBar = () => {
           <Link className="navbar-item navitemStyle" to="/">
             Home
           </Link>
+          
+          <Link className="navbar-item navitemStyle" to="/forum">
+            Forum
+          </Link>
         </div>
 
         <div className="navbar-end" id="navend">

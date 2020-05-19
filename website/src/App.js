@@ -11,6 +11,7 @@ import Signup from "./Signup";
 import Logout from "./Logout";
 import Profile from "./Profile";
 import NavBar from "./NavBar";
+import Forum from "./Forum";
 
 class ProtectedRoute extends Component {
   render() {
@@ -39,6 +40,7 @@ class App extends Component {
           <NavBar/>
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route path="/forum" component={Forum} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route path="/logout" component={Logout} />

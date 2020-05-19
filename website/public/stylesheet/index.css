@@ -1,3 +1,10 @@
+#navbar{
+    background-color: #0f073a;
+}
+.navbar-burger{
+    color: white;
+}
+
 .navbarStyle{
     background-color: #0f073a;
 }
@@ -78,4 +85,9 @@
 
 .atxtwhite:hover{
  color: #f5c349 !important;
+}
+
+#hr{
+ background-color: #809aaa;
+
 }
