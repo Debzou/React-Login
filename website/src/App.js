@@ -12,7 +12,6 @@ import Logout from "./Logout";
 import Profile from "./Profile";
 import NavBar from "./NavBar";
 
-
 class ProtectedRoute extends Component {
   render() {
       const { component: Component, ...props } = this.props;
@@ -36,7 +35,7 @@ class App extends Component {
   render() {
     return (      
       <Router>        
-        <div>
+        <div id="content-wrap">
           <NavBar/>
           <Switch>
             <Route exact path="/" component={Home} />
