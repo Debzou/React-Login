@@ -19,3 +19,10 @@ cd ./API
 npm install
 sudo node app.js
 ```
+
+## update
+```bash
+sudo npm outdated
+```
+
+
