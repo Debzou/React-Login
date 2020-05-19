@@ -16,7 +16,6 @@ import NavBar from "./NavBar";
 class ProtectedRoute extends Component {
   render() {
       const { component: Component, ...props } = this.props;
-
       return (
           <Route
               {...props}
@@ -35,10 +34,8 @@ class ProtectedRoute extends Component {
 class App extends Component {
   
   render() {
-    return (
-      
-      <Router>
-        
+    return (      
+      <Router>        
         <div>
           <NavBar/>
           <Switch>
