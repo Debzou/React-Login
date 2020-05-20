@@ -30,12 +30,13 @@
 .buttoncolor1 {
     background-color: #2f2946;
     color: white !important;
-    border: 0px;
+    border: 0px ;
 }
 
 .buttoncolor1:hover {
     background-color:  #413960;
     color: white !important;
+    border: 0px ;
 }
 
 .buttoncolor2 {
@@ -47,6 +48,7 @@
 .buttoncolor2:hover {
     background-color:  #58265a;
     color: white !important;
+    border: 0px;
 }
 
 .buttoncolor3 {
@@ -58,7 +60,25 @@
 .buttoncolor3:hover {
     background-color:  #51152d;
     color: white !important;
+    border: 0px;
 }
+
+.buttoncolor4 {
+    background-color: #f5c349;
+    color: white !important;
+    border: 0px;
+}
+
+.buttoncolor4:hover {
+    background-color:  #f5c349;
+    color: white !important;
+    border: 0px;
+}
+
+
+
+
+
 
 #App {
     position: relative;
@@ -88,6 +108,19 @@
 }
 
 #hr{
- background-color: #809aaa;
+ background-color: #51152d;
+ border-top: 1px solid;
+}
 
+
+.theEnd{
+    float:right;
+}
+
+a{
+    text-decoration: none !important;
+}
+
+.a-forum:hover{
+    color: #51152d;
 }

@@ -21,6 +21,33 @@ const AccountSchema = new Schema (
 	}
 });
 
+// populate
+const ThreadSchema = new Schema(
+	{
+		creator : String,
+		createdAt : {
+			type : Date,
+			default : Date.now
+		},
+		messages : [{type: Schema.Types.ObjectId, ref: 'Message' }],
+	}
+);
+
+const MessageSchema = new Schema(
+	{
+		creator : String,		
+		message : String,
+		threadname : String,
+		createdAt : {
+			type : Date,
+			default : Date.now
+		},
+
+	}
+);
+
 module.exports = {
-	Account : mongoose.model('Account', AccountSchema)
+	Account : mongoose.model('Account', AccountSchema),
+	Message : mongoose.model('Message', MessageSchema),
+	Thread : mongoose.model('Thread', ThreadSchema),
 };

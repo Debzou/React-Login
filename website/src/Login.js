@@ -24,8 +24,9 @@ class Login extends Component {
       })
       .then((response) => {
         if (response.data !== "error") {
-          localStorage.setItem("usernameStorage", response.data);
-          console.log("done");
+          localStorage.setItem("tokenStorage", response.data.token);
+          localStorage.setItem("idStorage", response.data.id);
+          localStorage.setItem("usernameStorage", response.data.username);
           let nam = "log";
           this.setState({ [nam]: true });
           this.props.history.push('/');
