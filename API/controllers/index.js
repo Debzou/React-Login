@@ -27,7 +27,7 @@ function logInPerson(req, res) {
         if (err) throw err;
         if (result.length == 1) {
             //req.session.username = req.body.username;
-            res.json(result[0].token);
+            res.json({token : result[0].token, id : result[0]._id,username:result[0].username});
         } else {
             res.json('error');
         }
