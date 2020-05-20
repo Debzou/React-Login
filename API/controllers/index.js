@@ -44,6 +44,7 @@ function logOut(req, res) {
         if (err) {
             return console.log(err);
         }
+        res.end('done');
     });
 }
 
@@ -65,6 +66,14 @@ function getEMail(req, res) {
     });
 }
 
+
+function isConnected(req,res){
+    if(req.session.userid){
+        res.json({res:true});
+    }else{
+        res.json({res:false});
+    }
+}
 // export function
 
 module.exports.signUpPerson = signUpPerson;
@@ -72,3 +81,4 @@ module.exports.logInPerson = logInPerson;
 module.exports.logOut = logOut;
 module.exports.getEMail =getEMail;
 module.exports.getUsername = getUsername;
+module.exports.isConnected = isConnected;

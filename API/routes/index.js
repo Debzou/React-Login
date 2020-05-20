@@ -16,8 +16,13 @@ router.post('/login',(req,res)=>{
 });
 
 // Log Out
-router.get('/logout',(req,res) => {
+router.get('/logout-server',(req,res) => {
+    console.log('tamere');
     controller.logOut(req, res);
+});
+
+router.get('/isConnected',(req,res) => {
+    controller.isConnected(req, res);
 });
 
 // Check if username exists

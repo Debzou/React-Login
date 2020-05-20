@@ -3,12 +3,6 @@ import {Link} from "react-router-dom";
 
 class NavBarButtonEnd extends Component {
   
-  logout = (event) =>{
-    event.preventDefault();
-    console.log('logout');
-    localStorage.clear();
-    window.location.reload(false);
-  }
   render() {
     if (localStorage.getItem("usernameStorage")) {
       return (
@@ -22,12 +16,12 @@ class NavBarButtonEnd extends Component {
                 <span>Profile</span>
               </Link>
               &nbsp;
-              <button className="button buttoncolor3" onClick={this.logout}>
+              <Link className="button buttoncolor3" to="/logout">
                 <span className="icon">
                   <i className="fas fa-sign-out-alt"></i>
                 </span>
                 <span>Log Out</span>
-              </button>
+              </Link>
             </p>
           </div>
         </span>
