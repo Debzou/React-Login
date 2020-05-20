@@ -1,17 +1,18 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
 import axios from "axios";
 
 // clear token
 // redirect to home page
 class Logout extends Component {
-  render() {
-    axios.get("/logout").then(()=>console.log('session server deleted'))
-    localStorage.clear();    
+  constructor(props){
+    super(props);
+    axios.get("/logout-server");
+    localStorage.clear(); 
+    this.props.history.push('/login')
+  }
+  render() {   
     return (
-      <div>
-        <Redirect to="/login" />        
-      </div>
+      <div></div>
     );
   }
 }
