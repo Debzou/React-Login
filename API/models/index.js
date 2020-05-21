@@ -25,6 +25,7 @@ const AccountSchema = new Schema (
 const ThreadSchema = new Schema(
 	{
 		creator : String,
+		title: String,
 		createdAt : {
 			type : Date,
 			default : Date.now
@@ -37,7 +38,7 @@ const MessageSchema = new Schema(
 	{
 		creator : String,		
 		message : String,
-		threadname : String,
+		threadid : String,
 		createdAt : {
 			type : Date,
 			default : Date.now

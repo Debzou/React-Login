@@ -74,6 +74,50 @@ function isConnected(req,res){
         res.json({res:false});
     }
 }
+
+function addMessage(obj,res){
+    const Models = require('../models');
+    Models.Thread.findOneAndUpdate({_id: obj.threadid}, {$push: {messages: obj._id}}, function (err) {
+        if (err) throw err;
+        res.end("done");
+    });
+}
+
+function postMessage(req,res){
+    // if(req.session.userid){
+        const Models = require('../models');
+        const newMessage = Models.Message ({
+            creator : req.body.creator,		
+		    message : req.body.message,
+		    threadid : req.body.threadid,
+        });
+        newMessage.save(function(err,obj) {
+            if (err) throw err;
+            res.end('done');
+            addMessage(obj,res);
+        });
+    // }else{
+    //     res.json({res:"not connected"})
+    // }
+}
+
+
+function postThread(req,res){
+    if(req.session.userid){
+        const Models = require('../models');
+        const newThread = Models.Thread ({
+            creator : req.body.creator,	
+            title : req.body.title		    
+        });
+        newThread.save(function(err,obj) {
+            if (err) throw err;
+            res.end('done');
+        });
+    }else{
+        res.json({res:"not connected"})
+    }
+}
+
 // export function
 
 module.exports.signUpPerson = signUpPerson;
@@ -82,3 +126,5 @@ module.exports.logOut = logOut;
 module.exports.getEMail =getEMail;
 module.exports.getUsername = getUsername;
 module.exports.isConnected = isConnected;
+module.exports.postMessage = postMessage;
+module.exports.postThread = postThread;

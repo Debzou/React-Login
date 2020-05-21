@@ -17,7 +17,6 @@ router.post('/login',(req,res)=>{
 
 // Log Out
 router.get('/logout-server',(req,res) => {
-    console.log('tamere');
     controller.logOut(req, res);
 });
 
@@ -36,6 +35,14 @@ router.get('/api/email/:email',(req,res)=>{
 
 router.get('/',(req,res)=>{
     res.end("welcome in API")
+});
+
+router.post('/api/message',(req,res)=>{
+    controller.postMessage(req,res);
+});
+
+router.post('/api/thread',(req,res)=>{
+    controller.postThread(req,res);
 });
 
 
