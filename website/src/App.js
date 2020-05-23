@@ -44,6 +44,7 @@ class App extends Component {
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route path="/logout" component={Logout} />
+            {/* <Route path="/thread/:idthread" component={thread} /> */}
             <ProtectedRoute path="/profile" component={Profile} />
             {/* if there is a random person */}
             <Route render={() => <Redirect to="/" />} />

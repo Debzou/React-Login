@@ -1,10 +1,17 @@
 import React, { Component } from "react";
 import ListThread from "./ListThread";
+import axios from "axios";
+
+
 
 class Forum extends Component{
     constructor(props){
         super(props);
-        this.state={research:""}
+        this.state={research:null,threads:[]};
+        // GET /api/threads
+        axios.get("/api/threads").then((response)=>response.data).then((data)=>{
+            this.setState({threads:data})
+        });       
     }
     // changing
     onchanged = (event) => {
@@ -15,7 +22,24 @@ class Forum extends Component{
         this.setState({ [nam]: val });
         console.log(val);
     }
+
+    
+     
     render() {
+        // create balise 
+        // insert list thread 
+        let threads = [];
+        this.state.threads.forEach(element => {
+            threads.push(<ListThread title={element.title} 
+                            pseudo={element.creator}
+                            date={element.createdAt}
+                            number = {element.messages.length}/>
+                            );
+            threads.push(<hr id="hr"/>);
+        });
+       
+
+        // html
         return(            
             <section>
             <nav className="level is-mobile">
@@ -28,12 +52,8 @@ class Forum extends Component{
             </nav>            
             <br/>
             <br/>
-            <div className="notification">       
-               <br/>    
-               <ListThread title="what is dugeon and dragon" pseudo="debzou" date="15/04/2020 10:05" />
-               <hr id="hr"/>    
-               <ListThread title="what is dugeon and dragon" pseudo="debzou" date="15/04/2020 10:05" />
-               <br/>               
+            <div className="notification"> 
+            {threads}                   
             </div>
             </section>
            

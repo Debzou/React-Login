@@ -45,5 +45,14 @@ router.post('/api/thread',(req,res)=>{
     controller.postThread(req,res);
 });
 
+router.get('/api/threads',(req,res)=>{
+    controller.getThreads(req,res);
+});
+
+router.get('/api/messages/:idthread',(req,res)=>{
+    controller.getMessages(req,res);
+});
+
+
 
 module.exports=router;

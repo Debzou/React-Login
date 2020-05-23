@@ -84,7 +84,7 @@ function addMessage(obj,res){
 }
 
 function postMessage(req,res){
-    // if(req.session.userid){
+    if(req.session.userid){
         const Models = require('../models');
         const newMessage = Models.Message ({
             creator : req.body.creator,		
@@ -96,9 +96,9 @@ function postMessage(req,res){
             res.end('done');
             addMessage(obj,res);
         });
-    // }else{
-    //     res.json({res:"not connected"})
-    // }
+    }else{
+        res.json({res:"not connected"})
+    }
 }
 
 
@@ -118,6 +118,26 @@ function postThread(req,res){
     }
 }
 
+
+
+function getThreads(req,res){
+    const Models = require('../models');
+    Models.Thread.find({}, function (err,obj) {
+        if (err) throw err;
+        res.json(obj);
+    });
+}
+
+function getMessages(req,res){
+    const Models = require('../models');
+    Models.Thread.findOne({_id: req.params.idthread }).populate('messages').exec(function (err,obj) {
+        if (err) return handleError(err);
+        res.json(obj);
+    // prints "The author is Ian Fleming"
+    });
+}
+
+
 // export function
 
 module.exports.signUpPerson = signUpPerson;
@@ -128,3 +148,5 @@ module.exports.getUsername = getUsername;
 module.exports.isConnected = isConnected;
 module.exports.postMessage = postMessage;
 module.exports.postThread = postThread;
+module.exports.getThreads = getThreads;
+module.exports.getMessages = getMessages;

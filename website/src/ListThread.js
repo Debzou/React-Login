@@ -4,7 +4,7 @@ class ListThread extends Component{
         return(
             <div className="a-forum">
                 <a  href="/"> {this.props.title} --> created by {this.props.pseudo} 
-                <i className="far fa-comments theEnd"></i> 
+                <i className="far fa-comments theEnd"></i><i className="theEnd"> {this.props.number} &nbsp; </i> 
                 <br/>
                 <p>{this.props.date}</p>
                 </a> 

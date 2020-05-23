@@ -38,7 +38,7 @@ const MessageSchema = new Schema(
 	{
 		creator : String,		
 		message : String,
-		threadid : String,
+		threadid : Schema.Types.ObjectId,
 		createdAt : {
 			type : Date,
 			default : Date.now
