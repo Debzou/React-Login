@@ -7,10 +7,11 @@ import axios from "axios";
 class Forum extends Component{
     constructor(props){
         super(props);
-        this.state={research:null,threads:[]};
+        this.state={research:null,threads:[],threadsResearch:[]};
         // GET /api/threads
         axios.get("/api/threads").then((response)=>response.data).then((data)=>{
             this.setState({threads:data})
+            this.setState({threadsResearch:data})
         });       
     }
     
@@ -21,13 +22,11 @@ class Forum extends Component{
         // value of attribut
         let val = event.target.value;
         this.setState({ [nam]: val });
-        axios.get("/api/threads").then((response)=>response.data)
         // filter title and pseudo
-        .then((data)=>data.filter(datum => String(datum.title).includes(val) || String(datum.creator).includes(val)))
-        // changing state
-        .then((data)=>{
-            this.setState({threads:data})
-        });       
+        let newdata = this.state.threads.filter(datum => String(datum.title).includes(val) || String(datum.creator).includes(val));
+        // changing state        
+        this.setState({threadsResearch:newdata});
+              
     }
 
     
@@ -36,7 +35,7 @@ class Forum extends Component{
         // create balise 
         // insert list thread 
         let threads = [];
-        this.state.threads.forEach(element => {
+        this.state.threadsResearch.forEach(element => {
             threads.push(<ListThread 
                             key={element._id.toString()}
                             title={element.title.toString()} 
