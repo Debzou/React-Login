@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ListThread from "./ListThread";
+import ThreadTab from "./ThreadTab";
 import axios from "axios";
 
 
@@ -10,8 +10,8 @@ class Forum extends Component{
         this.state={research:null,threads:[],threadsResearch:[]};
         // GET /api/threads
         axios.get("/api/threads").then((response)=>response.data).then((data)=>{
-            this.setState({threads:data})
-            this.setState({threadsResearch:data})
+            this.setState({threads:data});
+            this.setState({threadsResearch:data});
         });       
     }
     
@@ -27,23 +27,23 @@ class Forum extends Component{
         // changing state        
         this.setState({threadsResearch:newdata});
               
-    }
-
-    
+    }    
      
     render() {
         // create balise 
         // insert list thread 
         let threads = [];
         this.state.threadsResearch.forEach(element => {
-            threads.push(<ListThread 
-                            key={element._id.toString()}
+            threads.push(<ThreadTab
+                            key={element._id} 
+                            id={element._id}
                             title={element.title.toString()} 
                             pseudo={element.creator.toString()}
                             date={element.createdAt.toString()}
                             number = {element.messages.length.toString()}/>
                             );
-            threads.push(<hr id="hr"/>);
+            threads.push(<hr id="hr" key={element._id+'hr'}/>);
+            
         });
        
 
