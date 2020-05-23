@@ -104,12 +104,13 @@
 }
 
 .atxtwhite:hover{
- color: #f5c349 !important;
+    color: #f5c349 !important;
 }
 
 #hr{
- background-color: #51152d;
- border-top: 1px solid;
+
+    background-color: #51152d;
+    height: 1px;
 }
 
 
@@ -123,4 +124,12 @@ a{
 
 .a-forum:hover{
     color: #51152d;
+}
+
+.inputColor1{
+    border-color: #51152d;
+}
+
+.inputColor1:focus{
+    border-color: #51152d;
 }
