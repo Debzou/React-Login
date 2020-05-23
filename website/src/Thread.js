@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { useParams } from "react-router";
+
 
 class Thread extends Component{
     constructor(props){
