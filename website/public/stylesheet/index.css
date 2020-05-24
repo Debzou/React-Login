@@ -130,3 +130,7 @@ a{
 .inputColor1:focus{
     border-color: #51152d;
 }
+
+.ql-editor{
+    height: 250px !important;
+}

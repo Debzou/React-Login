@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import ThreadTab from "./ThreadTab";
 import axios from "axios";
+// forum
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 
 
@@ -8,7 +11,11 @@ import axios from "axios";
 class Forum extends Component{
     constructor(props){
         super(props);
-        this.state={research:null,threads:[],threadsResearch:[],actived:"modal"};
+        this.state={research:null,
+            threads:[],
+            threadsResearch:[],
+            actived:"modal",
+            message:"Your first message"};
         // GET /api/threads
         axios.get("/api/threads").then((response)=>response.data).then((data)=>{
             this.setState({threads:data});
@@ -43,7 +50,11 @@ class Forum extends Component{
         // changing state        
         this.setState({threadsResearch:newdata});
               
-    }    
+    } 
+    
+    setmessage = (event) => {
+        this.setState({ message: event });
+    }
      
     render() {
         // create balise 
@@ -62,6 +73,7 @@ class Forum extends Component{
             
         });
         
+
         // html
         return(            
             <section className="notification">
@@ -93,6 +105,7 @@ class Forum extends Component{
                     <input className="input inputColor1" type="text" placeholder="thread's title" ></input> 
                     <br/>
                     <br/>
+                    <ReactQuill theme="snow" value={this.state.message} />
                     <br/>
                     <button  className="is-rounded button  buttoncolor3 is-small">Create a new thread &nbsp; <i class="fas fa-globe-americas"></i></button>    
                 </section>
