@@ -19,7 +19,7 @@
 }
 
 .hero-image {
-    background-image: url("../background.jpg");
+    background-image: url("../background3.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -74,9 +74,6 @@
     color: white !important;
     border: 0px;
 }
-
-
-
 
 
 

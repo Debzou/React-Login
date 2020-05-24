@@ -83,19 +83,20 @@ class Forum extends Component{
             </div>
             {/* modal */}
             <div className={this.state.actived}>
-                <div className="modal-background"></div>
-                <div className="modal-content">
-                    <nav className="level is-mobile">
-                        <div className="level-item">
-                            <input className="input inputColor1" type="text" placeholder="Title thread" ></input>
-                        </div>
-                    
-                    <div className="level-left">
-                        <button  className="is-rounded button  buttoncolor3 is-small"><i className="fas fa-plus-circle"></i></button> 
-                    </div>
-                    </nav>  
-                </div>   
-                <button className="modal-close is-large" aria-label="close" onClick={this.disabledModal}></button>
+            <div class="modal-background"></div>
+                <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Create a thread</p>
+                    <button id="modalclose" class="delete" aria-label="close" onClick={this.disabledModal}></button>
+                </header>
+                <section class="modal-card-body">
+                    <input className="input inputColor1" type="text" placeholder="thread's title" ></input> 
+                    <br/>
+                    <br/>
+                    <br/>
+                    <button  className="is-rounded button  buttoncolor3 is-small">Create a new thread &nbsp; <i class="fas fa-globe-americas"></i></button>    
+                </section>
+            </div>
             </div>   
             </section>
            
