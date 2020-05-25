@@ -101,17 +101,36 @@ function postMessage(req,res){
     }
 }
 
+function postFIRSTmessage(creator,message,threadid,res){
+   
+    const Models = require('../models');
+    const newMessage = Models.Message ({
+        creator : creator,		
+        message : message,
+        threadid : threadid,
+    });
+    newMessage.save(function(err,obj) {
+        if (err) throw err;
+        res.end('done');
+        addMessage(obj,res);
+    });
+    
+}
+
 
 function postThread(req,res){
     if(req.session.userid){
         const Models = require('../models');
+        const creator =req.body.creator;
+        const message = req.body.message;
         const newThread = Models.Thread ({
-            creator : req.body.creator,	
+            idCreator : req.body.idCreator,
+            creator : creator,	
             title : req.body.title		    
         });
         newThread.save(function(err,obj) {
             if (err) throw err;
-            res.end('done');
+            postFIRSTmessage(creator,message,obj._id,res)
         });
     }else{
         res.json({res:"not connected"})

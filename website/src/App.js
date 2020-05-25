@@ -12,6 +12,7 @@ import Logout from "./Logout";
 import Profile from "./Profile";
 import NavBar from "./NavBar";
 import Forum from "./Forum";
+import Thread from "./Thread";
 
 class ProtectedRoute extends Component {
   render() {
@@ -44,7 +45,7 @@ class App extends Component {
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route path="/logout" component={Logout} />
-            {/* <Route path="/thread/:idthread" component={thread} /> */}
+            <Route path="/thread/:threadID" component={Thread} /> 
             <ProtectedRoute path="/profile" component={Profile} />
             {/* if there is a random person */}
             <Route render={() => <Redirect to="/" />} />

@@ -8,7 +8,8 @@ class Logout extends Component {
     super(props);
     axios.get("/logout-server");
     localStorage.clear(); 
-    this.props.history.push('/login')
+    this.props.history.push('/login');
+    window.location.reload(false);
   }
   render() {   
     return (
