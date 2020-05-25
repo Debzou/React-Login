@@ -15,6 +15,7 @@ class Forum extends Component{
             threads:[],
             threadsResearch:[],
             actived:"modal",
+            title:"",
             message:"Your first message"};
         // GET /api/threads
         axios.get("/api/threads").then((response)=>response.data).then((data)=>{
@@ -52,8 +53,42 @@ class Forum extends Component{
               
     } 
     
+    // message forum 
     setmessage = (event) => {
         this.setState({ message: event });
+    }
+
+    // changing title
+    setTitle = (event) => {
+        // name of attribut
+        let nam = event.target.name;
+        // value of attribut
+        let val = event.target.value;
+        this.setState({ [nam]: val });
+    }
+
+    // post thread
+    postnewthread = () =>{
+        if (localStorage.getItem('idStorage')){
+            // connected on the customer
+            // check if the customser is connected on the server
+            axios.post("/api/thread", {
+                idCreator : localStorage.getItem('idStorage'),
+                creator : localStorage.getItem('usernameStorage'),
+                title : this.state.title,
+                message : this.state.message,
+            })
+            .then((response) => response.data)
+            .then(data => {
+                if (data==='done'){
+                    this.disabledModal();
+                    let newdata = this.state.threads;
+                }
+            })
+        }else{
+            // connected on the customer
+            alert('you must be connected');
+        }
     }
      
     render() {
@@ -80,7 +115,7 @@ class Forum extends Component{
             {/* research bar */}
             <nav className="level is-mobile">
                 <div className="level-item">
-                    <input className="input inputColor1" type="text" placeholder="Research thread" onChange={this.onchanged}></input>
+                    <input className="input inputColor1" type="text" name="research" placeholder="Research thread" onChange={this.onchanged}></input>
                 </div>
                 {/* add thread */}
                 <div className="level-left">
@@ -95,19 +130,19 @@ class Forum extends Component{
             </div>
             {/* modal */}
             <div className={this.state.actived}>
-            <div class="modal-background"></div>
-                <div class="modal-card">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Create a thread</p>
-                    <button id="modalclose" class="delete" aria-label="close" onClick={this.disabledModal}></button>
+            <div className="modal-background"></div>
+                <div className="modal-card">
+                <header className="modal-card-head">
+                    <p className="modal-card-title">Create a thread</p>
+                    <button id="modalclose" className="delete" aria-label="close" onClick={this.disabledModal}></button>
                 </header>
-                <section class="modal-card-body">
-                    <input className="input inputColor1" type="text" placeholder="thread's title" ></input> 
+                <section className="modal-card-body">
+                    <input className="input inputColor1" name="title" type="text" placeholder="thread's title" onChange={this.setTitle} ></input> 
                     <br/>
                     <br/>
-                    <ReactQuill theme="snow" value={this.state.message} />
+                    <ReactQuill theme="snow" value={this.state.message} onChange={this.setmessage}/>
                     <br/>
-                    <button  className="is-rounded button  buttoncolor3 is-small">Create a new thread &nbsp; <i class="fas fa-globe-americas"></i></button>    
+                    <button onClick={this.postnewthread}  className="is-rounded button  buttoncolor3 is-small">Create a new thread &nbsp; <i className="fas fa-globe-americas"></i></button>    
                 </section>
             </div>
             </div>   

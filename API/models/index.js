@@ -24,6 +24,7 @@ const AccountSchema = new Schema (
 // populate
 const ThreadSchema = new Schema(
 	{
+		idCreator : {type: Schema.Types.ObjectId, ref : 'Account'},
 		creator : String,
 		title: String,
 		createdAt : {
