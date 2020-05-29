@@ -1,11 +1,12 @@
-import React, { Component } from "react";
+import React, { Component} from "react";
 import ThreadTab from "./ThreadTab";
 import axios from "axios";
 // forum
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
-
+// socket io 
+//import socketIOClient from "socket.io-client";
+import io from 'socket.io-client';
 
 
 class Forum extends Component{
@@ -16,12 +17,20 @@ class Forum extends Component{
             threadsResearch:[],
             actived:"modal",
             title:"",
+            newtread:null,
             message:"Your first message"};
         // GET /api/threads
         axios.get("/api/threads").then((response)=>response.data).then((data)=>{
             this.setState({threads:data});
             this.setState({threadsResearch:data});
-        });       
+        }); 
+        // socket io
+        const socket = io('localhost:3002');
+        socket.emit("user-connection", 'SubscribeNewThread');
+        socket.on("new-thread", data => {
+            this.setState({newtread:data.title})
+            console.log(data);
+        });   
     }
     activedModal = () => {
          // name of attribut
@@ -67,6 +76,7 @@ class Forum extends Component{
         this.setState({ [nam]: val });
     }
 
+
     // post thread
     postnewthread = () =>{
         if (localStorage.getItem('idStorage')){
@@ -82,7 +92,6 @@ class Forum extends Component{
             .then(data => {
                 if (data==='done'){
                     this.disabledModal();
-                    let newdata = this.state.threads;
                 }
             })
         }else{
@@ -90,6 +99,7 @@ class Forum extends Component{
             alert('you must be connected');
         }
     }
+
      
     render() {
         // create balise 
@@ -107,8 +117,8 @@ class Forum extends Component{
             threads.push(<hr id="hr" key={element._id+'hr'}/>);
             
         });
-        
 
+        
         // html
         return(            
             <section className="notification">
