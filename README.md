@@ -9,13 +9,15 @@
 
 # Ports
 
-### 3000 : react
-### 3001 : app.js
-### 3002 : websocket ( socket io )
+3000 : react
+3001 : app.js
+3002 : websocket ( socket io )
 
-### DB
-### 27017 : mongodb
-### 6379 : redis
+### database 
+27017 : mongodb
+6379 : redis
+
+# clone 
 
 ```bash
 git clone 'RemoteName'
