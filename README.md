@@ -3,6 +3,19 @@
 - a secure login with the use of JWT 
 - an account creation page that checks many validation fields
 - a responsive web application 
+- you can post a thread and message in the forum page
+- Quill extension
+
+
+# Ports
+
+### 3000 : react
+### 3001 : app.js
+### 3002 : websocket ( socket io )
+
+### DB
+### 27017 : mongodb
+### 6379 : redis
 
 ```bash
 git clone 'RemoteName'
