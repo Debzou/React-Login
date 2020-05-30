@@ -9,6 +9,11 @@ const session = require('express-session');
 const redis = require('redis');
 const redisStore = require('connect-redis')(session);
 const client = redis.createClient();
+// socket io
+// port 3002
+const server = require('http').Server(app).listen(3002);
+const io = require('socket.io')(server);
+
 
 // Parser 
 app.use(bodyParser.urlencoded ( {
@@ -22,15 +27,16 @@ app.use(session({
     saveUninitialized: false,
     resave: false
 }));
-
+  
 app.use(bodyParser.json());
 app.use(DreamTeamRoutes);
 
-// Listen port
+// Listen port 3001
+// API
 app.listen(3001,(err)=>{
     if (err)
         throw err;
-    console.log("waiting on localhost:3001")
+    console.log("waiting on localhost:3001 ")
 });
 
 
@@ -42,4 +48,19 @@ mongoose.connect(database,{useNewUrlParser: true},(err)=> {
     console.log('Connect to the database');
 });
 
+// socket io
+io.on('connection', function(socket) {
+    // When we want to update threads on the forum page we will have to call this
+    socket.on('user-connection',(data)=> {
+        console.log(data);
+        if (data.sub ==='SubscribeNewThread'){
+            socket.join('new-thread');   
+        }         
+    });
+    socket.on('disconnect', function() {
+        socket.disconnect();
+    });
+});
 
+
+module.exports.io = io;

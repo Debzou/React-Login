@@ -130,7 +130,10 @@ function postThread(req,res){
         });
         newThread.save(function(err,obj) {
             if (err) throw err;
-            postFIRSTmessage(creator,message,obj._id,res)
+            postFIRSTmessage(creator,message,obj._id,res);
+            const io = require('../app').io;
+            io.to('new-thread').emit('new-thread', obj);
+
         });
     }else{
         res.json({res:"not connected"})
