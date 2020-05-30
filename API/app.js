@@ -31,7 +31,8 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(DreamTeamRoutes);
 
-// Listen port
+// Listen port 3001
+// API
 app.listen(3001,(err)=>{
     if (err)
         throw err;
@@ -49,10 +50,10 @@ mongoose.connect(database,{useNewUrlParser: true},(err)=> {
 
 // socket io
 io.on('connection', function(socket) {
-    console.log('connection');   
-    // When we want to update the orders displayed on the dashboard page we will have to call this
+    // When we want to update threads on the forum page we will have to call this
     socket.on('user-connection',(data)=> {
-        if (data ==='SubscribeNewThread'){
+        console.log(data);
+        if (data.sub ==='SubscribeNewThread'){
             socket.join('new-thread');   
         }         
     });

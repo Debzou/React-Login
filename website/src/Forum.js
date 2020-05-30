@@ -26,9 +26,11 @@ class Forum extends Component{
         }); 
         // socket io
         const socket = io('localhost:3002');
-        socket.emit("user-connection", 'SubscribeNewThread');
+        let obj = {id:localStorage.getItem('idStorage'),sub:'SubscribeNewThread'}
+        socket.emit("user-connection", obj);
         socket.on("new-thread", data => {
-            this.setState({newtread:data.title})
+            this.setState({newtread:data.title});
+            this.state.threadsResearch.push(data);
             console.log(data);
         });   
     }
