@@ -9,13 +9,13 @@
 
 # Ports
 
-3000 : react
-3001 : app.js
-3002 : websocket ( socket io )
+- 3000 : react
+- 3001 : app.js
+- 3002 : websocket ( socket io )
 
 ### database 
-27017 : mongodb
-6379 : redis
+- 27017 : mongodb
+- 6379 : redis
 
 # clone 
 
